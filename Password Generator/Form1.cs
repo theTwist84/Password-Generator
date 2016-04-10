@@ -28,7 +28,6 @@ namespace Password_Generator
 
         public const string Alphabet = "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-
         public const string AlphabetSym = "abcdefghijklmnopqrstuvwyxzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789*!#@%?&";
 
         public static string Encrypt(string plainText, string passPhrase)
