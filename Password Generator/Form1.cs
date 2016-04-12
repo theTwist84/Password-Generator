@@ -179,6 +179,7 @@ namespace Password_Generator
                     tr.Close();
                     string decryptedstring = Decrypt(encryptedstring, password);
                     label3.Text = decryptedstring;
+                    MessageBox.Show("Your password has been fetched and decrypted, you can click on it to add it to your clipboard.", "Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -194,6 +195,7 @@ namespace Password_Generator
             tw.WriteLine(password);
             tw.WriteLine(encryptedstring);
             tw.Close();
+            MessageBox.Show("Password had been saved in an encrypted state.", "Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
