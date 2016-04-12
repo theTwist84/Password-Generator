@@ -197,5 +197,12 @@ namespace Password_Generator
             tw.Close();
             MessageBox.Show("Password had been saved in an encrypted state.", "Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            Application.Exit();
+            Environment.Exit(1);
+        }
     }
 }

@@ -101,13 +101,5 @@ namespace Password_Generator
                 }
             }
         }
-
-        private void OnApplicationExit(object sender, EventArgs e)
-        {
-            var frm = new Login();
-            frm.Close();
-            Application.Exit();
-            Environment.Exit(0);
-        }
     }
 }
