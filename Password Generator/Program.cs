@@ -16,7 +16,9 @@ namespace Password_Generator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login());
+            var frm = new Login();
+            frm.Show();
+            Application.Run();
         }
     }
 }
