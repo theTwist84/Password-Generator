@@ -148,19 +148,19 @@ namespace Password_Generator
 
         private void label3_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(label1.Text);
+            Clipboard.SetText(label3.Text);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             if (comboBox1.Text == "Generate")
             {
-                if (checkBox1.Enabled == true)
+                if (checkBox1.Checked == true)
                 {
                     label3.Text = GenerateStringSym();
                 }
                 
-                else if (checkBox1.Enabled == false)
+                else if (checkBox1.Checked == false)
                 {
                     label3.Text = GenerateString();
                 }
