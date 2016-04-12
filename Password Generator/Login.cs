@@ -17,17 +17,17 @@ namespace Password_Generator
     {
         private static string GetRandomSalt()
         {
-            return GenerateSalt(12);
+            return BCrypt.Net.BCrypt.GenerateSalt(12);
         }
 
         public static string HashPassword(string password)
         {
-            return BCrypt.HashPassword(password, GetRandomSalt());
+            return BCrypt.Net.BCrypt.HashPassword(password, GetRandomSalt());
         }
 
         public static bool ValidatePassword(string password, string correctHash)
         {
-            return Verify(password, correctHash);
+            return BCrypt.Net.BCrypt.Verify(password, correctHash);
         }
 
         public Login()
@@ -49,9 +49,57 @@ namespace Password_Generator
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form1 mainForm = new Form1();
-            mainForm.Show();
-            this.Hide();
+            if (button1.Text == "Create")
+            {
+                if (textBox1.TextLength > 4)
+                {
+                    if (textBox2.TextLength > 1)
+                    {
+                        TextWriter tw = new StreamWriter("config.txt");
+                        tw.WriteLine(textBox2.Text);
+                        tw.WriteLine(HashPassword(textBox1.Text));
+                        tw.Close();
+                        Form1 mainForm = new Form1();
+                        mainForm.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please make sure your login information is has a Usename and the password is atleast 5 characters.", "Incorrect Usename/Password", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please make sure your login information is has a Usename and the password is atleast 5 characters.", "Incorrect Usename/Password", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                if (File.Exists("config.txt"))
+                {
+                    TextReader tr = new StreamReader("config.txt");
+                    string Username = tr.ReadLine();
+                    string Hash = tr.ReadLine();
+                    tr.Close();
+                    if (Username == textBox2.Text)
+                    {
+                        if (ValidatePassword(textBox2.Text, Hash) == true)
+                        {
+                            Form1 mainForm = new Form1();
+                            mainForm.Show();
+                            this.Hide();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please make sure your login information is correct.", "Incorrect Usename/Password.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please make sure your login information is correct.", "Incorrect Usename/Password.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
         }
     }
 }
