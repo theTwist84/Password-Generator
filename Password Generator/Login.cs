@@ -83,7 +83,7 @@ namespace Password_Generator
                     tr.Close();
                     if (Username == textBox2.Text)
                     {
-                        if (ValidatePassword(textBox2.Text, Hash) == true)
+                        if (ValidatePassword(textBox1.Text, Hash) == true)
                         {
                             Form1 mainForm = new Form1();
                             mainForm.Show();
