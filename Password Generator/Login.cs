@@ -30,6 +30,11 @@ namespace Password_Generator
             return BCrypt.Net.BCrypt.Verify(password, correctHash);
         }
 
+        public static class Passing
+        {
+            public static string Passkey { get; set; }
+        }
+
         public Login()
         {
             InitializeComponent();
@@ -59,6 +64,7 @@ namespace Password_Generator
                         tw.WriteLine(textBox2.Text);
                         tw.WriteLine(HashPassword(textBox1.Text));
                         tw.Close();
+                        Passing.Passkey = textBox1.Text;
                         Form1 mainForm = new Form1();
                         mainForm.Show();
                         this.Hide();
@@ -85,8 +91,10 @@ namespace Password_Generator
                     {
                         if (ValidatePassword(textBox1.Text, Hash) == true)
                         {
+                            Passing.Passkey = textBox1.Text;
                             Form1 mainForm = new Form1();
                             mainForm.Show();
+                            mainForm.Key = textBox1.Text;
                             this.Close();
                         }
                         else
@@ -97,6 +105,30 @@ namespace Password_Generator
                     else
                     {
                         MessageBox.Show("Please make sure your login information is correct.", "Incorrect Usename/Password.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            if (e.CloseReason == CloseReason.WindowsShutDown) return;
+            {
+                if ((Application.OpenForms["Form1"] as Form1) != null)
+                {
+                }
+                else
+                {
+                    switch (MessageBox.Show(this, "Are you sure you want to close?", "Closing", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation))
+                    {
+                        case DialogResult.No:
+                            e.Cancel = true;
+                            break;
+                        default:
+                            Environment.Exit(0);
+                            break;
                     }
                 }
             }

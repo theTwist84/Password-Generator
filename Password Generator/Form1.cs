@@ -14,10 +14,13 @@ namespace Password_Generator
 {
     public partial class Form1 : Form
     {
+        public string Key;
+
         public Form1()
         {
             InitializeComponent();
             button2.Enabled = false;
+            Key = Login.Passing.Passkey;
         }
 
         Random rand = new Random();
@@ -174,10 +177,9 @@ namespace Password_Generator
                 {
 
                     TextReader tr = new StreamReader(name);
-                    string password = tr.ReadLine();
                     string encryptedstring = tr.ReadLine();
                     tr.Close();
-                    string decryptedstring = Decrypt(encryptedstring, password);
+                    string decryptedstring = Decrypt(encryptedstring, Key);
                     label3.Text = decryptedstring;
                     MessageBox.Show("Your password has been fetched and decrypted, you can click on it to add it to your clipboard.", "Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -188,21 +190,17 @@ namespace Password_Generator
         {
             Random rnd = new Random();
             string plaintext = label3.Text;
-            string password = (rnd.Next(100000, 999999)).ToString();
-            string encryptedstring = Encrypt(plaintext, password);
+            string encryptedstring = Encrypt(plaintext, Key);
             string name = textBox1.Text + ".txt";
             TextWriter tw = new StreamWriter(name);
-            tw.WriteLine(password);
             tw.WriteLine(encryptedstring);
             tw.Close();
             MessageBox.Show("Password had been saved in an encrypted state.", "Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        protected override void OnClosed(EventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            base.OnClosed(e);
-            Application.Exit();
-            Environment.Exit(1);
+            Environment.Exit(0);
         }
     }
 }
